@@ -1,0 +1,15 @@
+syntax = "proto3"
+
+package document;
+
+service DocumentService{
+    rpc getDocument (DocumentRequest) returns (DocumentResponse)
+}
+
+message DocumentRequest {
+    string document_id = 1;
+}
+
+message DocumentResponse {
+    string content = 1;
+}
