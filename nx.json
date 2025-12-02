@@ -42,7 +42,8 @@
         "apps/auth-service-e2e/**/*",
         "document-service-e2e/**/*",
         "apps/document-service-e2e/**/*",
-        "apps/api-gateway-e2e/**/*"
+        "apps/api-gateway-e2e/**/*",
+        "apps/board-service-e2e/**/*"
       ]
     }
   ]
