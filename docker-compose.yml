@@ -1,12 +1,12 @@
 version: '3.8'
 services:
   postgres-db:
-    image: postgres:15
+    image: postgres:latest
     container_name: postgres-db
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root-pass
+      POSTGRES_DB: collab-suite-db
     ports:
       - "5432:5432"
     volumes:
