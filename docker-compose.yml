@@ -6,8 +6,12 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root-pass
-      POSTGRES_DB: collab-suite-db
+      POSTGRES_DB: collab_auth_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - auth_pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  auth_pgdata:
