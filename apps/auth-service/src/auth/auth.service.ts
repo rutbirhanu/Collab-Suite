@@ -38,13 +38,13 @@ export class AuthService {
     }
 
 
+    // async validateUser(email: string, password: string) {
 
-    async validateUser(email: string, password: string) {
-
-    }
+    // }
 
 
-    async validateToken() {
+    // async validateToken() {
         
-    }
+    // }
+
 }
