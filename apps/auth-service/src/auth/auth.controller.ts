@@ -8,40 +8,36 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
     @Post("/register")
-    async register(@Req() request: Request, @Res() response: Response, @Body() registerDto: RegisterDto): Promise<any> {
+    async register(@Body() registerDto: RegisterDto): Promise<any> {
         try {
             const result = await this.authService.register(registerDto)
-            return response.status(201).json(
-                {
-                    status: "ok",
-                    result: result
-                }
-            )
+            return {
+                status: "ok",
+                result: result
+            }
         }
         catch (err) {
-            return response.status(500).json({
+            return {
                 status: "error",
                 message: err
-            })
+            }
         }
     }
 
     @Post("/login")
-    async login(@Req() request: Request, @Res() response: Response, @Body() loginDto: LoginDto): Promise<any> {
+    async login(@Body() loginDto: LoginDto): Promise<any> {
         try {
             const result = await this.authService.login(loginDto)
-            return response.status(201).json(
-                {
-                    status: "ok",
-                    result: result
-                }
-            )
+            return {
+                status: "ok",
+                result: result
+            }
         }
         catch (err) {
-            return response.status(500).json({
+            return {
                 status: "error",
                 message: err
-            })
+            }
         }
     }
 
