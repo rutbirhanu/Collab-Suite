@@ -1,22 +1,25 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import * as bcrypt from "bcryptjs"
+import { LoginDto } from "./dto/login.dto";
+import { RegisterDto } from "./dto/register.dto";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private readonly prisma: PrismaService,  private jwtService: JwtService) { }
 
-    async register(email: string, password: string, fullName: string) {
-        const existingUser = await this.prisma.user.findUnique({ where: { email } })
+    async register(registerDto : RegisterDto) {
+        const existingUser = await this.prisma.user.findUnique({ where: { email: registerDto.email } })
 
         if (existingUser) {
             throw new BadRequestException("User with this email already exists")
         }
 
-        const hashed = await bcrypt.hash(password, 10)
+        const hashed = await bcrypt.hash(registerDto.password, 10)
         const user = await this.prisma.user.create({
             data: {
-                email, password: hashed, fullName
+                email: registerDto.email, password: hashed, fullName: registerDto.fullName
             }
         })
 
@@ -25,16 +28,17 @@ export class AuthService {
     }
 
 
-    async login(email: string, password: string) {
-        const user = await this.prisma.user.findUnique({ where: { email } })
+    async login(loginDto : LoginDto) {
+        const user = await this.prisma.user.findUnique({ where: { email: loginDto.email } })
         if (!user) {
             return null
         }
-        const valid = await bcrypt.compare(password, user.password)
+        const valid = await bcrypt.compare(loginDto.password, user.password)
         if (!valid) {
             return null
         }
-        return user
+        const token = this.jwtService.sign({email: loginDto.email})
+        return token
     }
 
 
